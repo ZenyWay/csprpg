@@ -1,6 +1,6 @@
 {
   "name": "csprpg",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "basic cryptographically secure pseudo-random password generator based on node crypto's randombytes or webCrypto.getRandomValues in the browser",
   "main": "dist/index.min.js",
   "typings": "dist/index.d.ts",
@@ -36,6 +36,7 @@
     "randombytes": "2.1.0"
   },
   "devDependencies": {
+    "@types/randombytes": "^2.0.0",
     "@types/node": "12.0.3",
     "@typescript-eslint/eslint-plugin": "1.9.0",
     "@typescript-eslint/parser": "1.9.0",

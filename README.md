@@ -34,6 +34,7 @@ export default function csprpg (
 ): string
 
 export interface CsprpgSpec {
+  randombytes: typeof randombytes
   length: number
   lowercase: boolean
   uppercase: boolean

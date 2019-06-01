@@ -24,6 +24,7 @@ const NUMBERS = '0123456789'.split('')
 const SYMBOLS = '^!$%&/{([)]=}?\\+*~#<>|,;.:-_'.split('')
 
 export interface CsprpgSpec {
+  randombytes: typeof randombytes // e.g. for test purposes
   length: number
   lowercase: boolean
   uppercase: boolean
@@ -36,6 +37,7 @@ export interface CsprpgCallback {
 }
 
 const DEFAULT_CSPRPG_SPEC: CsprpgSpec = {
+  randombytes,
   length: 12,
   lowercase: true,
   uppercase: true,
@@ -72,16 +74,19 @@ export default function csprpg (
     return csprpg({ ...spec, length }, cb as CsprpgCallback)
   }
   const length = Math.min(MAX_LENGTH, Math.max(MIN_LENGTH, spec.length))
-  const { lowercase, uppercase, numbers, symbols } = spec
+  const { randombytes, lowercase, uppercase, numbers, symbols } = spec
 
   const alphabet = EMPTY_ARRAY.concat(
+    numbers ? NUMBERS : EMPTY_ARRAY,
     lowercase ? LOWERCASE : EMPTY_ARRAY,
     uppercase ? UPPERCASE : EMPTY_ARRAY,
-    numbers ? NUMBERS : EMPTY_ARRAY,
     symbols ? SYMBOLS : EMPTY_ARRAY
   )
 
   const radix = alphabet.length
+  if (!radix) {
+    return csprpg({ ...DEFAULT_CSPRPG_SPEC, randombytes, length }, cb)
+  }
   const units = Math.ceil((Math.log2(radix) * length) / 8)
 
   if (!cb) {
