@@ -26,10 +26,10 @@ const SYMBOLS = '^!$%&/{([)]=}?\\+*~#<>|,;.:-_'.split('')
 export interface CsprpgSpec {
   randombytes: typeof randombytes // e.g. for test purposes
   length: number
-  lowercase: boolean
-  uppercase: boolean
-  numbers: boolean
-  symbols: boolean
+  lowercase: boolean | string
+  uppercase: boolean | string
+  numbers: boolean | string
+  symbols: boolean | string
 }
 
 export interface CsprpgCallback {
@@ -77,10 +77,18 @@ export default function csprpg (
   const { randombytes, lowercase, uppercase, numbers, symbols } = spec
 
   const alphabet = EMPTY_ARRAY.concat(
-    numbers ? NUMBERS : EMPTY_ARRAY,
-    lowercase ? LOWERCASE : EMPTY_ARRAY,
-    uppercase ? UPPERCASE : EMPTY_ARRAY,
-    symbols ? SYMBOLS : EMPTY_ARRAY
+    numbers ? (isString(numbers) ? numbers.split('') : NUMBERS) : EMPTY_ARRAY,
+    lowercase
+      ? isString(lowercase)
+        ? lowercase.split('')
+        : LOWERCASE
+      : EMPTY_ARRAY,
+    uppercase
+      ? isString(uppercase)
+        ? uppercase.split('')
+        : UPPERCASE
+      : EMPTY_ARRAY,
+    symbols ? (isString(symbols) ? symbols.split('') : SYMBOLS) : EMPTY_ARRAY
   )
 
   const radix = alphabet.length
@@ -118,6 +126,10 @@ function isCallbackFirst (
 
 function isFunction (v: any): v is Function {
   return typeof v === 'function'
+}
+
+function isString (v: any): v is string {
+  return typeof (v && v.valueOf()) === 'string'
 }
 
 function isNumber (v: any): v is number {

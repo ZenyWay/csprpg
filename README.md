@@ -12,17 +12,17 @@ or webCrypto.getRandomValues in the browser.
 import csprpg from 'csprpg'
 const log = label => console.log.bind(console, label)
 
-const defaults = {
-  length: 12, // characters, min 4, max 4096
-  lowercase: true,
-  numbers: true,
-  symbols: true,
-  uppercase: true
+const spec = {
+  length: 16, // characters, default 12, min 4, max 4096
+  lowercase: true, // default
+  numbers: true, // default
+  symbols: '!$?#@+-=', // default true = `^!$%&/{([)]=}?\\+*~#<>|,;.:-_`
+  uppercase: true // default
 }
 
-log('sync')(csprpg(defaults))
+log('sync')(csprpg(spec))
 
-csprpg(defaults, log('async'))
+csprpg(spec, log('async'))
 ```
 
 # API v1
@@ -36,10 +36,10 @@ export default function csprpg (
 export interface CsprpgSpec {
   randombytes: typeof randombytes
   length: number
-  lowercase: boolean
-  uppercase: boolean
-  numbers: boolean
-  symbols: boolean
+  lowercase: boolean | string
+  uppercase: boolean | string
+  numbers: boolean | string
+  symbols: boolean | string
 }
 
 export interface CsprpgCallback {

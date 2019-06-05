@@ -1,6 +1,6 @@
 {
   "name": "csprpg",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "basic cryptographically secure pseudo-random password generator based on node crypto's randombytes or webCrypto.getRandomValues in the browser",
   "main": "dist/index.min.js",
   "typings": "dist/index.d.ts",

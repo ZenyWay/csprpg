@@ -114,13 +114,65 @@ const RANDOM_BYTES = {
     193,
     95,
     89
+  ],
+  C: [
+    114,
+    124,
+    167,
+    167,
+    168,
+    251,
+    174,
+    169,
+    163,
+    53,
+    126,
+    88,
+    11,
+    203,
+    14,
+    244,
+    6,
+    44,
+    211,
+    130,
+    174,
+    53,
+    41,
+    141,
+    77,
+    73,
+    80,
+    205,
+    227,
+    220,
+    158,
+    98,
+    205,
+    150,
+    17,
+    65,
+    218,
+    159,
+    38,
+    138,
+    157,
+    210,
+    204,
+    17,
+    156,
+    0,
+    72
   ]
 }
 
 const RANDOM_DIGITS = {
   A: 'ydbzhjc5d5ajkxkwjzbcowxo01kyjupmb5ln32tn7biqp9sri4vrvl0ptm9ogr1r',
-  B: 's;:]:F)oJ#h<_bXi.[[f&k^>!R}HH05z87NS<jxuvmc),9Lm#0&,*C#M!O;G~fYd'
+  B: 's;:]:F)oJ#h<_bXi.[[f&k^>!R}HH05z87NS<jxuvmc),9Lm#0&,*C#M!O;G~fYd',
+  C: ':o&7t4u9z7*7g;#z5i+kg4.-(g#t;m8#h;0!n7uq>u_43:&p8+n8t49ra46kb5=g'
 }
+
+const SYMBOLS = '#$%&_=+-*/<>()!?,;.:'
 
 test('when called without callback argument', t => {
   t.test('it returns a string', st => {
@@ -166,6 +218,24 @@ test('when called without callback argument', t => {
 
       function randombytes (length, cb) {
         return Uint8Array.from(RANDOM_BYTES.B)
+      }
+    }
+  )
+  t.test(
+    'it replaces the default character set when given a string instead of true',
+    st => {
+      const spec = {
+        randombytes,
+        length: RANDOM_DIGITS.C.length,
+        uppercase: false,
+        symbols: SYMBOLS
+      }
+      st.plan(1)
+      const res = csprpg(spec)
+      st.equal(res, RANDOM_DIGITS.C)
+
+      function randombytes (length) {
+        return Uint8Array.from(RANDOM_BYTES.C)
       }
     }
   )
