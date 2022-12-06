@@ -41,7 +41,7 @@
     "@typescript-eslint/eslint-plugin": "1.13.0",
     "@typescript-eslint/parser": "1.13.0",
     "common-shakeify": "0.6.2",
-    "http-server": "0.11.1",
+    "http-server": "0.11.2",
     "husky": "3.0.2",
     "lint-staged": "9.2.1",
     "prettier-standard": "9.1.1",
